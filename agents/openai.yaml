@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clash–aTrust 冲突诊断"
+  short_description: "诊断 Clash TUN 与 aTrust 的 DNS、FakeIP 和路由冲突"
+  default_prompt: "使用 $diagnosing-clash-atrust-conflicts 只读诊断我连接 aTrust 后 Clash TUN 失效的问题。"

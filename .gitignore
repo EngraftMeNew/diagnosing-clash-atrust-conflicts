@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+*.log
+*.db
+*.sqlite*
+*.bak
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.*
+/local/
