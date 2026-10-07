@@ -36,6 +36,10 @@ Global `redir-host` and an OpenAI-only real-IP filter did not solve the whole pr
 
 **`198.19.0.0/16` is not a universal fix.** It remains within RFC 2544's `198.18.0.0/15` benchmarking block. This result means only that one aTrust deployment did not capture it at the time of testing. Future aTrust, Mihomo, subscription, network, or organizational policy changes require a fresh A/B route check. Windows must be diagnosed independently; never apply the Mac range change by analogy.
 
+## Anonymized Windows case (2026)
+
+On one Windows 11 machine running Clash Verge Rev 2.5.7 and Mihomo v1.19.32, connecting aTrust caused Codex reconnections and direct TUN requests to abort, while the explicit Clash proxy continued to work. Unlike the macOS case, the captured Windows routes showed no aTrust prefix overlapping the old `198.18/16` FakeIP pool. A same-host HTTPS comparison found that the old FakeIP connection failed while a direct connection to a verified real IP worked. The active subscription's backed-up Merge changed only `dns.fake-ip-range` to `198.19.0.1/16`; a Clash core restart cleared retained old mappings. With TUN restored to its original `mixed` stack and aTrust connected, repeated HTTPS checks and Codex remained stable. The exact Windows interference mechanism was not established, and this pool is not a recommendation for other machines. See the [full Windows case](references/case-windows-2026.md).
+
 ## Safety and rollback
 
 - Default to read-only checks. The user manually connects and disconnects aTrust.
@@ -44,7 +48,7 @@ Global `redir-host` and an OpenAI-only real-IP filter did not solve the whole pr
 - Never add permanent OS routes, change system DNS or aTrust policy, delete `cache.db`, disable security protections, expose a controller beyond authenticated local access, or silently clear unrelated caches to force a test to pass.
 - An SSH `Permission denied` after transport reaches the server is an authentication result, not a VPN-path failure. One stuck Codex task alone is not proof of network failure.
 
-The full procedure is in [SKILL.md](SKILL.md), with separate [macOS](references/macos.md), [Windows](references/windows.md), [controlled experiment](references/controlled-experiment.md), [anonymized case](references/case-macos-2026.md), and [source](references/sources.md) references.
+The full procedure is in [SKILL.md](SKILL.md), with separate [macOS](references/macos.md), [Windows](references/windows.md), [controlled experiment](references/controlled-experiment.md), [macOS case](references/case-macos-2026.md), [Windows case](references/case-windows-2026.md), and [source](references/sources.md) references.
 
 ## License
 

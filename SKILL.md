@@ -13,13 +13,14 @@ Diagnose first; modify only after evidence and separate user approval. The defau
 - On Windows, read [Windows diagnostics](references/windows.md). Never transpose macOS commands or interface names to Windows.
 - When considering a change, read [controlled experiment and rollback](references/controlled-experiment.md) and [authoritative sources](references/sources.md).
 - Use [the 2026 macOS case](references/case-macos-2026.md) only as an example of evidence and a tested local workaround, not as a default prescription.
+- Use [the 2026 Windows case](references/case-windows-2026.md) as an example of a FakeIP-specific failure **without observed overlapping aTrust routes**; do not assume its pool choice applies elsewhere.
 
 ## Core diagnostic sequence
 
 1. Confirm the OS, Clash Verge Rev/Mihomo versions, active subscription and composed configuration, DNS mode and FakeIP range. Identify the actual TUN and aTrust interfaces rather than assuming names.
 2. With aTrust **off**, record interfaces, full IPv4 route table, default route, DNS, proxy settings, representative FakeIP answers, actual routes to those addresses, external connectivity, and a private resource if authorized. Preserve raw evidence in the conversation or an approved diagnostic location; redact credentials and tokens.
 3. Ask the user to **manually** start aTrust. Do not start it or enter VPN/SSH passwords. Repeat the same snapshot promptly. Normalize and diff full routes by destination prefix, next hop, interface, flags, and on Windows metrics; retain raw tables. Count and summarize all new routes overlapping the *entire* FakeIP pool and relevant special-use ranges. Check specific FakeIP routes to corroborate, not to infer coverage from a few samples.
-4. Separate route conflicts from DNS changes, default-route changes, interface metrics, HTTP/SOCKS proxy changes, IPv4/IPv6 selection, and WebSocket-specific failures. A more-specific prefix can win even if the default route does not change. Confirm the private resource still uses aTrust.
+4. Separate route conflicts from DNS changes, default-route changes, interface metrics, HTTP/SOCKS proxy changes, IPv4/IPv6 selection, and WebSocket-specific failures. A more-specific prefix can win even if the default route does not change. On Windows, if no route overlap is visible, compare direct FakeIP, direct real-IP, and explicit-proxy paths to the same HTTPS host before inferring a mechanism. Confirm the private resource still uses aTrust.
 5. Cross-check any Codex `Reconnecting` with a fresh task, unrelated HTTPS sites, DNS, and routes; one stuck task is not proof of general network failure. `Permission denied` after SSH transport reaches the server is authentication failure, not evidence of VPN path failure.
 
 ## Mutation gate
